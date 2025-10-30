@@ -1,31 +1,30 @@
-// #include <Wire.h>
 #include <Adafruit_MLX90640.h>
 
-// 21 -> SDA
-// 22 -> SCL
+// 18 -> SDA
+// 19 -> SCL
 
 Adafruit_MLX90640 mlx;
 float frame[32 * 24];
 
 void setup() {
-  Serial.begin(115200);
-  delay(1200);
+	Wire.begin(18, 19);
+	Serial.begin(115200);
+	delay(1200);
 
-  Serial.println("Adafruit MLX90640 Simple Test");
-  Serial.flush();
-  Wire.begin(21, 22);
-  if (mlx.begin(MLX90640_I2CADDR_DEFAULT, &Wire)) {
-    Serial.println("Found Adafruit MLX90640");
-  } else {
-    Serial.println("MLX90640 not found!");
-    while (1) delay(10);
-  }
+	Serial.println("Adafruit MLX90640 Simple Test");
+	Serial.flush();
+	if (mlx.begin(MLX90640_I2CADDR_DEFAULT, &Wire)) {
+		Serial.println("Found Adafruit MLX90640");
+	} else {
+		Serial.println("MLX90640 not found!");
+		while (1) delay(10);
+	}
 
 
-  Serial.print("Serial number: ");
-  Serial.print(mlx.serialNumber[0], HEX);
-  Serial.print(mlx.serialNumber[1], HEX);
-  Serial.println(mlx.serialNumber[2], HEX);
+	Serial.print("Serial number: ");
+	Serial.print(mlx.serialNumber[0], HEX);
+	Serial.print(mlx.serialNumber[1], HEX);
+	Serial.println(mlx.serialNumber[2], HEX);
 
 	mlx.setMode(MLX90640_CHESS);
 	mlx.setResolution(MLX90640_ADC_18BIT);
@@ -47,7 +46,7 @@ void loop() {
 	for (uint8_t h=0; h<24; h++) {
 		for (uint8_t w=0; w<32; w++) {
 			float t = frame[h*32 + w];
-			Serial.print(t, 1);
+			Serial.print(t, 5);
 			Serial.print(", ");
 		}
 		Serial.println();

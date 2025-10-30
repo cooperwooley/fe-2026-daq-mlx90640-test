@@ -1,9 +1,12 @@
 #include <Wire.h>
 
 void setup() {
-	Wire.begin(21, 22);
+	Wire.begin(18, 19);
 	Serial.begin(115200);
-	Serial.println("\nI2C Scanner");
+  delay(1000);
+
+	Serial.println("I2C Scanner");
+	
 	for (uint8_t addr = 1; addr < 127; addr++) {
 		Wire.beginTransmission(addr);
 		if (Wire.endTransmission() == 0) {
